@@ -1,8 +1,8 @@
-import { createStackNavigator } from '@react-navigation/stack';
-import React from 'react';
+import { createStackNavigator } from "@react-navigation/stack";
+import React from "react";
 
-import { colors } from '../constants';
-import { OnBoardingScreen } from '../screens';
+import { colors } from "../constants";
+import { OnBoardingScreen } from "../screens";
 
 const Stack = createStackNavigator();
 

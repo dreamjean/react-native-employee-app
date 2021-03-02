@@ -1,5 +1,4 @@
-import { icons, images } from './pictures';
+import { theme } from "./theme";
 
-export { icons, images };
-export { default as colors } from './colors';
-export { default as theme } from './theme';
+export { theme };
+export { default as colors } from "./colors";

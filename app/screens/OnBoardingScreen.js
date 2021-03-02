@@ -1,15 +1,20 @@
-import React from 'react';
-import { Text } from 'react-native';
-import styled from 'styled-components';
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
 
-const OnBoardingScreen = () => {
+function OnBoardingScreen() {
   return (
-    <Container>
-      <Text>on bording</Text>
-    </Container>
+    <View style={styles.container}>
+      <Text>on boarding Screen</Text>
+    </View>
   );
-};
+}
 
-const Container = styled.View``;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});
 
 export default OnBoardingScreen;

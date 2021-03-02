@@ -1,12 +1,12 @@
-import { Asset } from 'expo-asset';
-import * as Font from 'expo-font';
-import { useEffect, useState } from 'react';
+import { Asset } from "expo-asset";
+import * as Font from "expo-font";
+import { useEffect, useState } from "react";
 
-import { assets, fonts } from '../constants/assets';
+import { assets, fonts } from "../constants/assets";
 
 const cacheImages = (images) => {
   return images.map((image) => {
-    if (typeof image === 'string') {
+    if (typeof image === "string") {
       return Image.prefetch(image);
     } else {
       return Asset.fromModule(image).downloadAsync();
