@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-function OnBoardingScreen() {
+function ProfileScreen() {
   return (
     <View style={styles.container}>
       <Text>on boarding Screen</Text>
@@ -17,4 +17,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default OnBoardingScreen;
+export default ProfileScreen;

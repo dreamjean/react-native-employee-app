@@ -1,3 +1,3 @@
-export { default as DestinationDetailsScreen } from "./DestinationDetailsScreen";
 export { default as HomeScreen } from "./HomeScreen";
-export { default as OnBoardingScreen } from "./OnBoardingScreen";
+export { default as PersonalDetailsEditScreen } from "./PersonalDetailsEditScreen";
+export { default as ProfileScreen } from "./ProfileScreen";

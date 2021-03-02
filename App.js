@@ -5,7 +5,6 @@ import { Provider as PaperProvider } from "react-native-paper";
 
 import { theme } from "./app/constants";
 import useLoadAssets from "./app/hooks/useLoadAssets";
-// import AuthNavigator from './app/navigation/AuthNavigator';
 import AppNavigator from "./app/navigation/AppNavigator";
 import navigationTheme from "./app/navigation/navigationTheme";
 import cache from "./app/utility/cache";
@@ -50,7 +49,6 @@ export default function App() {
         {...{ initialState, onStateChange }}
         theme={navigationTheme}
       >
-        {/* <AuthNavigator /> */}
         <AppNavigator />
       </NavigationContainer>
     </PaperProvider>

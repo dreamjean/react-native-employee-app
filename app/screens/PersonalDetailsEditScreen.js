@@ -9,20 +9,14 @@ import { colors } from "../constants";
 
 let validationSchema = Yup.object().shape({
   name: Yup.string().label("Name"),
-  phone: Yup.number()
-
-    .min(8)
-    .max(8)
-    .positive()
-    .integer()
-    .label("Phone"),
+  phone: Yup.number().min(8).max(8).positive().integer().label("Phone"),
   email: Yup.string().email("Invalid Email"),
   salary: Yup.string().label("Salary"),
   picture: Yup.string().label("Pciture"),
   position: Yup.string().label("Position"),
 });
 
-function DestinationDetailsScreen() {
+function PersonalDetailsEditScreen() {
   const [modelVisible, setModelVisitble] = useState(false);
 
   return (
@@ -79,6 +73,15 @@ function DestinationDetailsScreen() {
           >
             Upload Image
           </Button>
+          <Button
+            style={styles.uploadButton}
+            icon="content-save"
+            mode="contained"
+            labelStyle={styles.label}
+            onPress={() => true}
+          >
+            Save
+          </Button>
           <Modal visible={modelVisible} animationType="slide" transparent>
             <View style={styles.modal}>
               <View style={styles.buttonsContainer}>
@@ -116,7 +119,8 @@ function DestinationDetailsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    padding: 15,
+    paddingTop: 30,
     backgroundColor: colors.grey,
   },
   uploadButton: {
@@ -144,4 +148,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DestinationDetailsScreen;
+export default PersonalDetailsEditScreen;
