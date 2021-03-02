@@ -8,5 +8,6 @@ export default {
     ...DefaultTheme.colors,
     primary: colors.primary,
     border: "transparent",
+    background: colors.grey,
   },
 };

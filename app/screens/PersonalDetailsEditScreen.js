@@ -121,13 +121,12 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 15,
     paddingTop: 30,
-    backgroundColor: colors.grey,
   },
   uploadButton: {
     marginTop: 10,
   },
   label: {
-    color: "white",
+    color: colors.white,
   },
   modal: {
     backgroundColor: colors.white,
