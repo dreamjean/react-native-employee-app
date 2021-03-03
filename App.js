@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import { Provider as PaperProvider } from "react-native-paper";
 
 import { theme } from "./app/constants";
-import useLoadAssets from "./app/hooks/useLoadAssets";
 import AppNavigator from "./app/navigation/AppNavigator";
 import navigationTheme from "./app/navigation/navigationTheme";
 import cache from "./app/utility/cache";
@@ -14,7 +13,6 @@ const PERSISTENCE_KEY = "NAVIGATION_STATE";
 export default function App() {
   const [isReady, setIsReady] = useState(false);
   const [initialState, setInitalState] = useState();
-  const { assetsLoaded, setAssetsLoaded, loadAssetsAsync } = useLoadAssets();
 
   const restoreState = async () => {
     try {
@@ -35,11 +33,11 @@ export default function App() {
   const onStateChange = (PERSISTENCE_KEY, state) =>
     cache.store(PERSISTENCE_KEY, state);
 
-  if (!assetsLoaded || !isReady)
+  if (!isReady)
     return (
       <AppLoading
-        startAsync={loadAssetsAsync}
-        onFinish={() => setAssetsLoaded(true)}
+        startAsync={restoreState}
+        onFinish={() => isReady(true)}
         onError={console.warn}
       />
     );

@@ -1,23 +1,42 @@
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
 
-import {
-  HomeScreen,
-  PersonalDetailsEditScreen,
-  ProfileScreen,
-} from "../screens";
+import { colors } from "../constants";
+import { HomeScreen, NewPersonalEditScreen, ProfileScreen } from "../screens";
 
-const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
 const AppNavigator = () => (
-  <Tab.Navigator>
-    <Tab.Screen name="Home" component={HomeScreen} />
-    <Tab.Screen
-      name="PersonalDetailsEdit"
-      component={PersonalDetailsEditScreen}
+  <Stack.Navigator
+    initialRouteName="Home"
+    screenOptions={{
+      headerTintColor: colors.white,
+      headerTitleAlign: "center",
+      headerStyle: {
+        backgroundColor: colors.primary,
+      },
+    }}
+  >
+    <Stack.Screen
+      name="Home"
+      component={HomeScreen}
+      options={{
+        title: "My Sweet Home",
+      }}
     />
-    <Tab.Screen name="Profile" component={ProfileScreen} />
-  </Tab.Navigator>
+    <Stack.Screen
+      name="NewPersonalEdit"
+      component={NewPersonalEditScreen}
+      options={{
+        title: "New Personal Edit",
+      }}
+    />
+    <Stack.Screen
+      name="Profile"
+      component={ProfileScreen}
+      options={{ headerShown: false }}
+    />
+  </Stack.Navigator>
 );
 
 export default AppNavigator;

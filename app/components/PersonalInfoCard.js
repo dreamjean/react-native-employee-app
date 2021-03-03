@@ -2,9 +2,9 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { Avatar, Card } from "react-native-paper";
 
-function PersonalInfoCard({ name, subtitle }) {
+function PersonalInfoCard({ name, subtitle, onPress }) {
   return (
-    <Card style={styles.cardContainer}>
+    <Card style={styles.cardContainer} {...{ onPress }}>
       <Card.Title
         title={name}
         titleStyle={styles.title}

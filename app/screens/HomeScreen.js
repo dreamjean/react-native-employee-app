@@ -28,21 +28,25 @@ const personalInfo = [
   },
 ];
 
-function HomeScreen() {
+function HomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <FlatList
         data={personalInfo}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-          <PersonalInfoCard name={item.name} subtitle={item.profession} />
+          <PersonalInfoCard
+            name={item.name}
+            subtitle={item.profession}
+            onPress={() => navigation.navigate("Profile", item)}
+          />
         )}
       />
       <FAB
         style={styles.fab}
         small={false}
         icon="plus"
-        onPress={() => console.log("Pressed")}
+        onPress={() => navigation.navigate("NewPersonalEdit")}
       />
     </View>
   );

@@ -1,7 +1,8 @@
+import { SimpleLineIcons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { Linking, Platform, Pressable, StyleSheet, View } from "react-native";
 import { Avatar, Button, Card, List } from "react-native-paper";
 
 import { colors } from "../constants";
@@ -10,10 +11,12 @@ const listItems = [
   {
     title: "abc@abc.com",
     icon: "email",
+    linking: "mailto:abc@abc.com",
   },
   {
     title: "123456",
     icon: "phone",
+    linking: Platform.OS === "android" ? "tel:123456" : "telprompt:123456",
   },
   {
     title: "8 LPA",
@@ -21,13 +24,28 @@ const listItems = [
   },
 ];
 
-function ProfileScreen() {
+function ProfileScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <LinearGradient
         colors={[colors.darkBlue, colors.lightBlue]}
         style={styles.linear}
       />
+      <Pressable
+        style={({ pressed }) => ({
+          position: "absolute",
+          top: 30,
+          left: 18,
+          opacity: pressed ? 0.5 : 1,
+        })}
+        onPress={() => navigation.goBack()}
+      >
+        <SimpleLineIcons
+          name="arrow-left-circle"
+          size={32}
+          color={colors.white}
+        />
+      </Pressable>
       <View style={styles.imgContainer}>
         <Avatar.Image
           size={100}
@@ -44,21 +62,24 @@ function ProfileScreen() {
         subtitle="web developer"
         subtitleStyle={styles.subtitle}
       />
-      {listItems.map((item) => (
-        <List.Item
-          key={item.title}
-          title={item.title}
-          style={styles.listItem}
-          left={(props) => (
-            <List.Icon
-              {...props}
-              color={colors.primary}
-              style={{ marginRight: 4 }}
-              icon={item.icon}
-            />
-          )}
-        />
-      ))}
+      <List.Section style={styles.setion}>
+        {listItems.map((item) => (
+          <List.Item
+            key={item.title}
+            title={item.title}
+            style={styles.listItem}
+            onPress={() => Linking.openURL(item.linking)}
+            left={(props) => (
+              <List.Icon
+                {...props}
+                color={colors.primary}
+                style={{ marginRight: 4 }}
+                icon={item.icon}
+              />
+            )}
+          />
+        ))}
+      </List.Section>
       <View style={styles.buttonContainer}>
         <Button
           labelStyle={styles.buttonLabel}
@@ -115,15 +136,18 @@ const styles = StyleSheet.create({
   card: {
     margin: 3,
   },
+  setion: {
+    padding: 10,
+  },
   listItem: {
     backgroundColor: colors.white,
     padding: 0,
-    margin: 10,
+    margin: 5,
   },
   buttonContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    padding: 30,
+    padding: 20,
   },
   buttonLabel: {
     color: colors.white,

@@ -16,7 +16,7 @@ let validationSchema = Yup.object().shape({
   position: Yup.string().label("Position"),
 });
 
-function PersonalDetailsEditScreen() {
+function NewPersonalEditScreen() {
   const [modelVisible, setModelVisitble] = useState(false);
 
   return (
@@ -147,4 +147,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PersonalDetailsEditScreen;
+export default NewPersonalEditScreen;
