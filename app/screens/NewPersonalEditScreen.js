@@ -1,10 +1,14 @@
-import React, { useState } from "react";
-import { Modal, StyleSheet, View } from "react-native";
+import React from "react";
+import { StyleSheet, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scrollview";
-import { Button } from "react-native-paper";
 import * as Yup from "yup";
 
-import { Form, FormField } from "../components/form";
+import {
+  Form,
+  FormField,
+  FormImagePicker,
+  SubmitButton,
+} from "../components/form";
 import { colors } from "../constants";
 
 let validationSchema = Yup.object().shape({
@@ -12,15 +16,20 @@ let validationSchema = Yup.object().shape({
   phone: Yup.number().min(8).max(8).positive().integer().label("Phone"),
   email: Yup.string().email("Invalid Email"),
   salary: Yup.string().label("Salary"),
-  picture: Yup.string().label("Pciture"),
-  position: Yup.string().label("Position"),
+  picture: Yup.string().nullable().label("Pciture"),
+  profession: Yup.string().label("Profession"),
 });
 
 function NewPersonalEditScreen() {
-  const [modelVisible, setModelVisitble] = useState(false);
-
   return (
-    <KeyboardAwareScrollView>
+    <KeyboardAwareScrollView
+      contentContainerStyle={{ flexGrow: 1 }}
+      extraScrollHeight={100}
+      enableOnAndroid
+      enableAutomaticScroll
+      keyboardShouldPersistTaps="always"
+      showsVerticalScrollIndicator={false}
+    >
       <View style={styles.container}>
         <Form
           initialValues={{
@@ -28,12 +37,13 @@ function NewPersonalEditScreen() {
             phone: "",
             email: "",
             salary: "",
-            picture: "",
-            position: "",
+            picture: null,
+            profession: "",
           }}
           validationSchema={validationSchema}
           onSubmit={(values) => console.log(values)}
         >
+          <FormImagePicker name="picture" />
           <FormField
             name="name"
             label="Name"
@@ -59,57 +69,14 @@ function NewPersonalEditScreen() {
             placeholder="Salary"
           />
           <FormField
-            name="position"
-            label="Position"
+            name="profession"
+            label="Profession"
             keyboardType="default"
-            placeholder="Position"
+            placeholder="Profession"
           />
-          <Button
-            style={styles.uploadButton}
-            icon="upload"
-            mode="contained"
-            labelStyle={styles.label}
-            onPress={() => setModelVisitble(true)}
-          >
-            Upload Image
-          </Button>
-          <Button
-            style={styles.uploadButton}
-            icon="content-save"
-            mode="contained"
-            labelStyle={styles.label}
-            onPress={() => true}
-          >
+          <SubmitButton style={styles.uploadButton} labelStyle={styles.label}>
             Save
-          </Button>
-          <Modal visible={modelVisible} animationType="slide" transparent>
-            <View style={styles.modal}>
-              <View style={styles.buttonsContainer}>
-                <Button
-                  icon="camera"
-                  mode="contained"
-                  labelStyle={styles.label}
-                  onPress={() => true}
-                >
-                  Camera
-                </Button>
-                <Button
-                  icon="image-area"
-                  mode="contained"
-                  labelStyle={styles.label}
-                  onPress={() => true}
-                >
-                  gallery
-                </Button>
-              </View>
-              <Button
-                style={styles.cancelButton}
-                onPress={() => setModelVisitble(false)}
-              >
-                cancel
-              </Button>
-            </View>
-          </Modal>
+          </SubmitButton>
         </Form>
       </View>
     </KeyboardAwareScrollView>
@@ -123,27 +90,10 @@ const styles = StyleSheet.create({
     paddingTop: 30,
   },
   uploadButton: {
-    marginTop: 10,
+    marginTop: 20,
   },
   label: {
     color: colors.white,
-  },
-  modal: {
-    backgroundColor: colors.white,
-    width: "100%",
-    height: 135,
-    position: "absolute",
-    bottom: 0,
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
-  },
-  buttonsContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    padding: 30,
-  },
-  cancelButton: {
-    marginTop: -5,
   },
 });
 

@@ -5,7 +5,16 @@ import { Button } from "react-native-paper";
 const SubmitButton = ({ children, ...rest }) => {
   const { handleSubmit } = useFormikContext();
 
-  return <Button onPress={handleSubmit} {...{ children }} {...rest} />;
+  return (
+    <Button
+      icon="content-save"
+      mode="contained"
+      onPress={handleSubmit}
+      {...rest}
+    >
+      {children}
+    </Button>
+  );
 };
 
 export default SubmitButton;

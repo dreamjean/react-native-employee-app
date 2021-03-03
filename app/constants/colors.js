@@ -7,5 +7,5 @@ export default {
   darkBlue: "#0033ff",
   grey: "#ededed",
   orange: "#ffa96b",
-  violet: "#9999ff",
+  light: "#f8fef2",
 };
