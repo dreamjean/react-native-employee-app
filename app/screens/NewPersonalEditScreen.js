@@ -1,3 +1,4 @@
+import { create } from "apisauce";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scrollview";
@@ -13,14 +14,31 @@ import { colors } from "../constants";
 
 let validationSchema = Yup.object().shape({
   name: Yup.string().label("Name"),
-  phone: Yup.number().min(8).max(8).positive().integer().label("Phone"),
+  phone: Yup.number().min(6).max(6).positive().integer().label("Phone"),
   email: Yup.string().email("Invalid Email"),
   salary: Yup.string().label("Salary"),
-  picture: Yup.string().nullable().label("Pciture"),
+  picture: Yup.string().nullable().label("Picture"),
   profession: Yup.string().label("Profession"),
 });
 
+const apiClient = create({
+  baseURL: "https://api.cloudinary.com/v1_1/dy9pp33hg",
+});
+
 function NewPersonalEditScreen() {
+  const handleSubmit = (userInfo) => {
+    const data = new FormData();
+    data.append("file", {
+      name: `image.${userInfo.picture.split(".")[1]}`,
+      type: "image/jepg",
+      uri: userInfo.picture,
+    });
+    data.append("upload_preset", "employeeApp");
+    data.append("cloud_name", "dy9pp33hg");
+
+    apiClient.post("/image/upload", data);
+  };
+
   return (
     <KeyboardAwareScrollView
       contentContainerStyle={{ flexGrow: 1 }}
@@ -41,7 +59,7 @@ function NewPersonalEditScreen() {
             profession: "",
           }}
           validationSchema={validationSchema}
-          onSubmit={(values) => console.log(values)}
+          onSubmit={handleSubmit}
         >
           <FormImagePicker name="picture" />
           <FormField

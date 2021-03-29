@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { Avatar, Card } from "react-native-paper";
 
-function PersonalInfoCard({ name, subtitle, onPress }) {
+function PersonalInfoCard({ name, subtitle, photo, onPress }) {
   return (
     <Card style={styles.cardContainer} {...{ onPress }}>
       <Card.Title
@@ -16,8 +16,7 @@ function PersonalInfoCard({ name, subtitle, onPress }) {
             {...props}
             size={60}
             source={{
-              uri:
-                "https://unsplash.com/photos/rDEOVtE7vOs/download?force=true&w=640",
+              uri: photo,
             }}
           />
         )}

@@ -9,22 +9,29 @@ const personalInfo = [
   {
     id: 1,
     name: "Mukesh",
+    email: "mukesh@domo.com",
+    salary: "5 lpa",
+    phone: "123",
     profession: "web dev",
+    photo: "https://unsplash.com/photos/PrXsOoAYqgg/download?force=true&w=640",
   },
   {
     id: 2,
     name: "Suresh",
+    email: "suresh@domo.com",
+    salary: "6 lpa",
+    phone: "456",
     profession: "android dev",
+    photo: "https://unsplash.com/photos/PrXsOoAYqgg/download?force=true&w=640",
   },
   {
     id: 3,
     name: "Ramesh",
-    profession: "ML expert",
-  },
-  {
-    id: 4,
-    name: "Hitesh",
-    profession: "web dev",
+    email: "ramesh@domo.com",
+    salary: "7 lpa",
+    phone: "689",
+    profession: "ml expert",
+    photo: "https://unsplash.com/photos/PrXsOoAYqgg/download?force=true&w=640",
   },
 ];
 
@@ -38,6 +45,7 @@ function HomeScreen({ navigation }) {
           <PersonalInfoCard
             name={item.name}
             subtitle={item.profession}
+            photo={item.photo}
             onPress={() => navigation.navigate("Profile", item)}
           />
         )}

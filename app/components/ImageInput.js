@@ -20,9 +20,9 @@ function ImageInput({ image, onChangeImage }) {
   const requestMediaLibraryPermission = async () => {
     if (Platform.OS !== "web") {
       const {
-        granted,
+        status,
       } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-      if (!granted) {
+      if (status !== "granted") {
         alert("Sorry, we need camera roll permissions to make this work!");
       }
     }
@@ -30,9 +30,9 @@ function ImageInput({ image, onChangeImage }) {
 
   const requestCameraPermission = async () => {
     if (Platform.OS !== "web") {
-      const { granted } = await ImagePicker.requestCameraPermissionsAsync();
-      if (!granted) {
-        alert("Sorry, we need camera roll permissions to make this work!");
+      const { status } = await ImagePicker.requestCameraPermissionsAsync();
+      if (status !== "granted") {
+        alert("Sorry, we need camera permissions to make this work!");
       }
     }
   };
@@ -75,12 +75,9 @@ function ImageInput({ image, onChangeImage }) {
     <>
       <Pressable
         style={{
-          width: 80,
-          height: 80,
-          borderRadius: 40,
-          overflow: "hidden",
-          margin: 5,
           alignSelf: "center",
+          justifyContent: "center",
+          margin: 5,
         }}
         onPress={() => setModelVisitble(true)}
       >
@@ -104,11 +101,13 @@ function ImageInput({ image, onChangeImage }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: colors.light,
     overflow: "hidden",
+    backgroundColor: colors.light,
+    borderRadius: 40,
+    width: 80,
+    height: 80,
   },
   image: {
     width: "100%",

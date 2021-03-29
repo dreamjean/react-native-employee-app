@@ -7,24 +7,27 @@ import { Avatar, Button, Card, List } from "react-native-paper";
 
 import { colors } from "../constants";
 
-const listItems = [
-  {
-    title: "abc@abc.com",
-    icon: "email",
-    linking: "mailto:abc@abc.com",
-  },
-  {
-    title: "123456",
-    icon: "phone",
-    linking: Platform.OS === "android" ? "tel:123456" : "telprompt:123456",
-  },
-  {
-    title: "8 LPA",
-    icon: "currency-usd",
-  },
-];
+function ProfileScreen({ navigation, route }) {
+  const { name, email, salary, phone, photo, profession } = route.params;
 
-function ProfileScreen({ navigation }) {
+  const listItems = [
+    {
+      title: email,
+      icon: "email",
+      linking: `mailto:${email}`,
+    },
+    {
+      title: phone,
+      icon: "phone",
+      linking:
+        Platform.OS === "android" ? `tel:${phone}` : `telprompt:${phone}`,
+    },
+    {
+      title: salary,
+      icon: "currency-usd",
+    },
+  ];
+
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -50,16 +53,15 @@ function ProfileScreen({ navigation }) {
         <Avatar.Image
           size={100}
           source={{
-            uri:
-              "https://unsplash.com/photos/PrXsOoAYqgg/download?force=true&w=640",
+            uri: photo,
           }}
         />
       </View>
       <Card.Title
         style={styles.titleContainer}
-        title="Ramesh verma"
+        title={name}
         titleStyle={styles.title}
-        subtitle="web developer"
+        subtitle={profession}
         subtitleStyle={styles.subtitle}
       />
       <List.Section style={styles.setion}>
