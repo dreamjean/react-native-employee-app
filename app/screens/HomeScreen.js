@@ -7,7 +7,7 @@ import { PersonalInfoCard } from "../components";
 
 const personalInfo = [
   {
-    id: 1,
+    _id: 1,
     name: "Mukesh",
     email: "mukesh@domo.com",
     salary: "5 lpa",
@@ -16,7 +16,7 @@ const personalInfo = [
     photo: "https://unsplash.com/photos/PrXsOoAYqgg/download?force=true&w=640",
   },
   {
-    id: 2,
+    _id: 2,
     name: "Suresh",
     email: "suresh@domo.com",
     salary: "6 lpa",
@@ -25,7 +25,7 @@ const personalInfo = [
     photo: "https://unsplash.com/photos/PrXsOoAYqgg/download?force=true&w=640",
   },
   {
-    id: 3,
+    _id: 3,
     name: "Ramesh",
     email: "ramesh@domo.com",
     salary: "7 lpa",
@@ -40,7 +40,7 @@ function HomeScreen({ navigation }) {
     <View style={styles.container}>
       <FlatList
         data={personalInfo}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item) => item._id.toString()}
         renderItem={({ item }) => (
           <PersonalInfoCard
             name={item.name}
@@ -54,7 +54,7 @@ function HomeScreen({ navigation }) {
         style={styles.fab}
         small={false}
         icon="plus"
-        onPress={() => navigation.navigate("NewPersonalEdit")}
+        onPress={() => navigation.navigate("EmployeeEdit")}
       />
     </View>
   );

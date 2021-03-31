@@ -54,17 +54,6 @@ app.post("/send-data", (req, res) => {
     });
 });
 
-app.post("/delete", (req, res) => {
-  Employee.findByIdAndDelete(req.body.id)
-    .then((data) => {
-      console.log(data);
-      res.send(data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
-
 app.post("/update", (req, res) => {
   Employee.findByIdAndUpdate(req.body.id, {
     name: req.body.name,
@@ -74,6 +63,17 @@ app.post("/update", (req, res) => {
     picture: req.body.picture,
     profession: req.body.profession,
   })
+    .then((data) => {
+      console.log(data);
+      res.send(data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+app.post("/delete", (req, res) => {
+  Employee.findByIdAndDelete(req.body.id)
     .then((data) => {
       console.log(data);
       res.send(data);

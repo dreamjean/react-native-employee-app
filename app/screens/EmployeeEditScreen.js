@@ -1,9 +1,9 @@
-import { create } from "apisauce";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scrollview";
 import * as Yup from "yup";
 
+import employeeApi from "../api/employee";
 import {
   Form,
   FormField,
@@ -14,29 +14,26 @@ import { colors } from "../constants";
 
 let validationSchema = Yup.object().shape({
   name: Yup.string().label("Name"),
-  phone: Yup.number().min(6).max(6).positive().integer().label("Phone"),
   email: Yup.string().email("Invalid Email"),
+  phone: Yup.number().positive().integer().label("Phone"),
   salary: Yup.string().label("Salary"),
   picture: Yup.string().nullable().label("Picture"),
   profession: Yup.string().label("Profession"),
 });
 
-const apiClient = create({
-  baseURL: "https://api.cloudinary.com/v1_1/dy9pp33hg",
-});
+// const apiClient = create({
+//   baseURL: "https://api.cloudinary.com/v1_1/dy9pp33hg",
+// });
 
-function NewPersonalEditScreen() {
-  const handleSubmit = (userInfo) => {
-    const data = new FormData();
-    data.append("file", {
-      name: `image.${userInfo.picture.split(".")[1]}`,
-      type: "image/jepg",
-      uri: userInfo.picture,
-    });
-    data.append("upload_preset", "employeeApp");
-    data.append("cloud_name", "dy9pp33hg");
+function EmployeeEditScreen() {
+  const handleSubmit = async (employeeInfo, { resetForm }) => {
+    const result = await employeeApi.addEmployee(employeeInfo);
+    console.log(result);
+    if (!result.ok) {
+      return alert("Could not save the employee!");
+    }
 
-    apiClient.post("/image/upload", data);
+    resetForm();
   };
 
   return (
@@ -52,8 +49,8 @@ function NewPersonalEditScreen() {
         <Form
           initialValues={{
             name: "",
-            phone: "",
             email: "",
+            phone: "",
             salary: "",
             picture: null,
             profession: "",
@@ -69,16 +66,16 @@ function NewPersonalEditScreen() {
             placeholder="Name"
           />
           <FormField
-            name="phone"
-            label="Phone"
-            keyboardType="number-pad"
-            placeholder="Phone"
-          />
-          <FormField
             name="email"
             label="Email"
             keyboardType="email-address"
             placeholder="Email"
+          />
+          <FormField
+            name="phone"
+            label="Phone"
+            keyboardType="number-pad"
+            placeholder="Phone"
           />
           <FormField
             name="salary"
@@ -115,4 +112,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default NewPersonalEditScreen;
+export default EmployeeEditScreen;

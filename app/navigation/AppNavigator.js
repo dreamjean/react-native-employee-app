@@ -2,7 +2,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
 
 import { colors } from "../constants";
-import { HomeScreen, NewPersonalEditScreen, ProfileScreen } from "../screens";
+import { EmployeeEditScreen, HomeScreen, ProfileScreen } from "../screens";
 
 const Stack = createStackNavigator();
 
@@ -25,10 +25,10 @@ const AppNavigator = () => (
       }}
     />
     <Stack.Screen
-      name="NewPersonalEdit"
-      component={NewPersonalEditScreen}
+      name="EmployeeEdit"
+      component={EmployeeEditScreen}
       options={{
-        title: "New Personal Edit",
+        title: "Employee Edit",
       }}
     />
     <Stack.Screen
