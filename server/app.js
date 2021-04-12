@@ -1,88 +1,36 @@
 const express = require("express");
-const app = express();
-const bodyParser = require("body-parser");
+const cors = require("cors");
 const mongoose = require("mongoose");
-require("./Employee");
 
-app.use(bodyParser.json());
+require("dotenv").config();
 
-const Employee = mongoose.model("employee");
+const app = express();
+const port = process.env.PORT || 3000;
 
-const monfoUri =
-  "mongodb+srv://rnj:ZCaBHJLalB3vGvEV@cluster0.opuix.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+app.use(cors());
+app.use(express.json());
 
-mongoose.connect(monfoUri, {
+const uri = process.env.ATLAS_URI;
+
+mongoose.connect(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
 
 mongoose.connection.on("connected", () => {
-  console.log("connected to mongo yeahhh");
+  console.log("MongoDB database connection established successfully");
 });
 
 mongoose.connection.on("error", (err) => {
   console.log("error", err);
 });
 
-app.get("/", (req, res) => {
-  Employee.find({})
-    .then((data) => {
-      res.send(data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
+const employeesRouter = require("./routes/employees");
+const employeeRouter = require("./routes/employee");
 
-app.post("/send-data", (req, res) => {
-  const employee = new Employee({
-    name: req.body.name,
-    email: req.body.email,
-    phone: req.body.phone,
-    salary: req.body.salary,
-    picture: req.body.picture,
-    profession: req.body.profession,
-  });
-  employee
-    .save()
-    .then((data) => {
-      console.log(data);
-      res.send(data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
+app.use("/api/employees", employeesRouter);
+app.use("/api/employee", employeeRouter);
 
-app.post("/update", (req, res) => {
-  Employee.findByIdAndUpdate(req.body.id, {
-    name: req.body.name,
-    email: req.body.email,
-    phone: req.body.phone,
-    salary: req.body.salary,
-    picture: req.body.picture,
-    profession: req.body.profession,
-  })
-    .then((data) => {
-      console.log(data);
-      res.send(data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
-
-app.post("/delete", (req, res) => {
-  Employee.findByIdAndDelete(req.body.id)
-    .then((data) => {
-      console.log(data);
-      res.send(data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-});
-
-app.listen(3000, () => {
-  console.log("server running");
+app.listen(port, () => {
+  console.log(`server is running on port: ${port}`);
 });

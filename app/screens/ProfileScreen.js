@@ -5,10 +5,11 @@ import React from "react";
 import { Linking, Platform, Pressable, StyleSheet, View } from "react-native";
 import { Avatar, Button, Card, List } from "react-native-paper";
 
+import employeeApi from "../api/employee";
 import { colors } from "../constants";
 
 function ProfileScreen({ navigation, route }) {
-  const { name, email, salary, phone, photo, profession } = route.params;
+  const { _id, name, email, salary, phone, picture, position } = route.params;
 
   const listItems = [
     {
@@ -53,7 +54,7 @@ function ProfileScreen({ navigation, route }) {
         <Avatar.Image
           size={100}
           source={{
-            uri: photo,
+            uri: picture,
           }}
         />
       </View>
@@ -61,7 +62,7 @@ function ProfileScreen({ navigation, route }) {
         style={styles.titleContainer}
         title={name}
         titleStyle={styles.title}
-        subtitle={profession}
+        subtitle={position}
         subtitleStyle={styles.subtitle}
       />
       <List.Section style={styles.setion}>
@@ -87,7 +88,17 @@ function ProfileScreen({ navigation, route }) {
           labelStyle={styles.buttonLabel}
           icon="account-edit"
           mode="contained"
-          onPress={() => console.log("Pressed")}
+          onPress={() =>
+            navigation.navigate("EmployeeEdit", {
+              _id,
+              name,
+              email,
+              salary,
+              phone,
+              picture,
+              position,
+            })
+          }
         >
           Edit
         </Button>
@@ -95,7 +106,10 @@ function ProfileScreen({ navigation, route }) {
           labelStyle={styles.buttonLabel}
           icon="delete"
           mode="contained"
-          onPress={() => console.log("Pressed")}
+          onPress={() => {
+            employeeApi.deleteEmployee(_id);
+            navigation.navigate("Home");
+          }}
         >
           Fire employee
         </Button>
@@ -126,7 +140,7 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     alignItems: "center",
-    padding: 10,
+    paddingRight: 12,
   },
   title: {
     textAlign: "center",

@@ -18,22 +18,20 @@ let validationSchema = Yup.object().shape({
   phone: Yup.number().positive().integer().label("Phone"),
   salary: Yup.string().label("Salary"),
   picture: Yup.string().nullable().label("Picture"),
-  profession: Yup.string().label("Profession"),
+  position: Yup.string().label("Position"),
 });
 
-// const apiClient = create({
-//   baseURL: "https://api.cloudinary.com/v1_1/dy9pp33hg",
-// });
-
-function EmployeeEditScreen() {
+function EmployeeEditScreen({ navigation, route }) {
   const handleSubmit = async (employeeInfo, { resetForm }) => {
-    const result = await employeeApi.addEmployee(employeeInfo);
-    console.log(result);
-    if (!result.ok) {
-      return alert("Could not save the employee!");
+    if (route.params) {
+      const id = route.params._id;
+      await employeeApi.updateEmployee({ id, ...employeeInfo });
+    } else {
+      await employeeApi.addEmployee(employeeInfo);
     }
 
     resetForm();
+    navigation.navigate("Home");
   };
 
   return (
@@ -48,12 +46,12 @@ function EmployeeEditScreen() {
       <View style={styles.container}>
         <Form
           initialValues={{
-            name: "",
-            email: "",
-            phone: "",
-            salary: "",
-            picture: null,
-            profession: "",
+            name: route.params?.name || "",
+            email: route.params?.email || "",
+            phone: route.params?.phone.toString() || "",
+            salary: route.params?.salary || "",
+            picture: route.params?.picture || null,
+            position: route.params?.position || "",
           }}
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
@@ -84,13 +82,13 @@ function EmployeeEditScreen() {
             placeholder="Salary"
           />
           <FormField
-            name="profession"
-            label="Profession"
+            name="position"
+            label="Position"
             keyboardType="default"
-            placeholder="Profession"
+            placeholder="Position"
           />
           <SubmitButton style={styles.uploadButton} labelStyle={styles.label}>
-            Save
+            {route.params ? "Update" : "Save"}
           </SubmitButton>
         </Form>
       </View>
