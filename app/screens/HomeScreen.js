@@ -1,26 +1,26 @@
 import Constants from "expo-constants";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 import { FAB } from "react-native-paper";
 
 import { PersonalInfoCard } from "../components";
+import { ReduxContext } from "../redux/context";
 
 function HomeScreen({ navigation }) {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const { state, dispatch } = useContext(ReduxContext);
+  const { data, loading } = state;
 
   const fetchData = () => {
     fetch("http://192.168.0.21:3000/api/employees")
       .then((res) => res.json())
       .then((result) => {
-        setLoading(true);
-        setData(result);
-        setLoading(false);
+        dispatch({ type: "GET_DATA", payload: result });
+        dispatch({ type: "SET_LOADING", payload: false });
       })
       .catch((err) => {
         alert("Something went wrong.");
         console.log(err);
-        setLoading(false);
+        dispatch({ type: "SET_LOADING", payload: false });
       });
   };
 
